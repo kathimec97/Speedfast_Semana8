@@ -47,7 +47,7 @@ public class Pedido {
         this.estadoPedido = estadoPedido;
     }
 
-    public Enum<TipoPedido> getTipoPedido() {
+    public TipoPedido getTipoPedido() {
         return tipoPedido;
     }
 

@@ -3,7 +3,6 @@ package cl.duoc.dao.impl;
 import cl.duoc.dao.PedidoDAO;
 import cl.duoc.modelo.EstadoPedido;
 import cl.duoc.modelo.Pedido;
-import cl.duoc.modelo.Repartidor;
 import cl.duoc.modelo.TipoPedido;
 import cl.duoc.util.ConexionBD;
 
@@ -49,8 +48,8 @@ public class PedidoDAOImpl implements PedidoDAO {
 
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, pedido.getDireccionEntrega());
-            stmt.setString(2, pedido.getTipoPedido());
-            stmt.setString(3, pedido.getEstadoPedido());
+            stmt.setString(2, pedido.getTipoPedido().name());
+            stmt.setString(3, pedido.getEstadoPedido().name());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -71,8 +70,8 @@ public class PedidoDAOImpl implements PedidoDAO {
         try(PreparedStatement stmt = conexion.prepareStatement(sql)) {
 
             stmt.setString(1, pedido.getDireccionEntrega());
-            stmt.setString(2, pedido.getTipoPedido());
-            stmt.setString(3, pedido.getEstadoPedido());
+            stmt.setString(2, pedido.getTipoPedido().name());
+            stmt.setString(3, pedido.getEstadoPedido().name());
             stmt.setInt(4, pedido.getId());
             stmt.executeUpdate();
 
@@ -125,4 +124,55 @@ public class PedidoDAOImpl implements PedidoDAO {
         }
     return listaPedidos;
     }
-}
+
+    @Override
+    public List<Pedido> readByEstado(String estado) {
+        ArrayList<Pedido> listaPedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedidos  WHERE estado = ?";
+
+        try(PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setString(1, estado);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setId(rs.getInt("id"));
+                pedido.setDireccionEntrega(rs.getString("direccion"));
+                pedido.setTipoPedido(TipoPedido.valueOf(rs.getString("tipo")));
+                pedido.setEstadoPedido(EstadoPedido.valueOf(rs.getString("estado")));
+
+                listaPedidos.add(pedido);
+            }
+            }catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error al filtrar Pedidos por estado", e);
+        }
+        return listaPedidos;
+    }
+
+    @Override
+    public List<Pedido> readByTipo(String tipo) {
+
+            ArrayList<Pedido> listaPedidos = new ArrayList<>();
+            String sql = "SELECT * FROM pedidos  WHERE tipo = ?";
+
+            try(PreparedStatement stmt = conexion.prepareStatement(sql)) {
+                stmt.setString(1, tipo);
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    Pedido pedido = new Pedido();
+                    pedido.setId(rs.getInt("id"));
+                    pedido.setDireccionEntrega(rs.getString("direccion"));
+                    pedido.setTipoPedido(TipoPedido.valueOf(rs.getString("tipo")));
+                    pedido.setEstadoPedido(rs.getString("estado"));
+
+                    listaPedidos.add(pedido);
+                }
+            }catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Error al filtrar Pedidos por tipo.", e);
+            }
+            return listaPedidos;
+        }
+
+    }
+

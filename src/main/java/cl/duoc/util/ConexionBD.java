@@ -15,7 +15,18 @@ public class ConexionBD {
     private static final String USER = "root";
     private static final String PASSWORD = "25777";
 
-    public static Connection getConnection() throws SQLException, ClassNotFoundException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
-    }
+    private ConexionBD() {}
+
+ public static Connection getConnection() {
+        Connection conexion = null;
+
+        try{
+            conexion = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            System.out.println("Conexion establecida!");
+        }catch(SQLException e){
+            System.out.println("Error al conectar con la base de datos!");
+        }
+        return conexion;
+ }
 }
