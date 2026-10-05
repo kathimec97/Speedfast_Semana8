@@ -47,11 +47,7 @@ public class VistaVentanaPrincipal extends JFrame {
         });
         botonRepartidores.addActionListener(e -> new VistaVentanaRepartidores().setVisible(true));
         botonEntregas.addActionListener(e -> {
-            try {
-                new VistaVentanaEntregas().setVisible(true);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            new VistaVentanaEntregas().setVisible(true);
         });
 
     }
