@@ -2,6 +2,7 @@ package cl.duoc.dao;
 
 import cl.duoc.modelo.Pedido;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public interface PedidoDAO {
      *
      * @param id El identificador númerico único del pedido a eliminar.
      */
-    void delete(int id);
+    void delete(int id) throws SQLException;
 
     /**
      * Recupera todos los pedidos registrados en la base de datos.
@@ -53,7 +54,7 @@ public interface PedidoDAO {
      * Filtra los pedidos según su tipo.
      * @param tipo El tipo de pedido (COMIDA, ENCOMIENDA, EXPRESS).
      *
-     * @return Lista de pedidos que coinciden con el tipo..
+     * @return Lista de pedidos que coinciden con el tipo.
      */
     List<Pedido> readByTipo(String tipo);
 }

@@ -86,14 +86,12 @@ public class PedidoDAOImpl implements PedidoDAO {
      * @param id El número identificador único del pedido que se desea borrar.
      */
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException{
     String sql = "DELETE FROM pedidos  WHERE id = ?";
     try(PreparedStatement stmt = conexion.prepareStatement(sql)){
         stmt.setInt(1, id);
         stmt.executeUpdate();
         
-    } catch (SQLException e) {
-        LOGGER.log(Level.SEVERE,"Error al eliminar Pedido ",e);
     }
     }
 

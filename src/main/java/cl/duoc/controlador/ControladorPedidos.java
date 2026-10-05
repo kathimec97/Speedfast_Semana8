@@ -133,7 +133,16 @@ public class ControladorPedidos {
                 cargarTabla(modelo, "TODOS", "TODOS");
                 JOptionPane.showMessageDialog(null, "Pedido eliminado correctamente");
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el pedido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                if (e.getMessage().toLowerCase().contains("foreign key")) {
+                    JOptionPane.showMessageDialog(null,
+                            "No se puede eliminar este pedido porque ya tiene una entrega asignada." +
+                                    "Por favor, elimine la entrega primero desde la ventana de Entregas.",
+                            "Restricción de datos",
+                            JOptionPane.WARNING_MESSAGE);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el pedido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }
