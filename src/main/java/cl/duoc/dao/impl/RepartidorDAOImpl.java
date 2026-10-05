@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PropertyPermission;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,6 +77,7 @@ public class RepartidorDAOImpl implements RepartidorDAO {
 
             while (rs.next()) {
                 Repartidor repartidor = new Repartidor();
+                repartidor.setId(rs.getInt("id"));
                 repartidor.setNombre(rs.getString("nombre"));
                 listaRepartidores.add(repartidor);
             }
