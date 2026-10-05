@@ -104,4 +104,28 @@ public class ControladorEntregas {
         }
     }
 
+
+    public void cargarTabla(DefaultTableModel modelo, String tipoFiltro, int id) throws Exception {
+        modelo.setRowCount(0);
+        List<Entrega> lista;
+
+
+        if (tipoFiltro.equals("Pedido")) {
+            lista = entregaDAO.readByPedido(id);
+        } else {
+            lista = entregaDAO.readByRepartidor(id);
+        }
+
+
+        for (Entrega entrega : lista) {
+            modelo.addRow(new Object[]{
+                    entrega.getIdEntrega(),
+                    entrega.getPedido() != null ? entrega.getPedido().getId() : "",
+                    entrega.getRepartidor() != null ? entrega.getRepartidor().getId() : "",
+                    entrega.getFechaEntrega(),
+                    entrega.getHoraEntrega()
+            });
+        }
+    }
+
 }
