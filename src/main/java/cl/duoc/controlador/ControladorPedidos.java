@@ -99,12 +99,18 @@ public class ControladorPedidos {
         }
 
         try {
-            Pedido editado = new Pedido(id, direccion, estado, tipo);
+            Pedido editado = new Pedido();
+            editado.setId(id);
+            editado.setDireccionEntrega(direccion);
+            editado.setTipoPedido(tipo);
+            editado.setEstadoPedido(estado);
+
             pedidoDAO.update(editado);
             cargarTabla(modelo, "TODOS", "TODOS");
             JOptionPane.showMessageDialog(null, "Pedido editado correctamente");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al editar el pedido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
