@@ -36,7 +36,15 @@ public class VistaVentanaPrincipal extends JFrame {
         panelBotones.add(botonEntregas);
         add(panelBotones, BorderLayout.CENTER);
 
-        botonPedidos.addActionListener(e -> new VistaVentanaPedidos().setVisible(true));
+        botonPedidos.addActionListener(e -> {
+            try {
+                new VistaVentanaPedidos().setVisible(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         botonRepartidores.addActionListener(e -> new VistaVentanaRepartidores().setVisible(true));
         botonEntregas.addActionListener(e -> {
             try {
