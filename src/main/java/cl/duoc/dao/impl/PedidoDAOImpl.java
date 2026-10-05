@@ -164,7 +164,7 @@ public class PedidoDAOImpl implements PedidoDAO {
                     pedido.setId(rs.getInt("id"));
                     pedido.setDireccionEntrega(rs.getString("direccion"));
                     pedido.setTipoPedido(TipoPedido.valueOf(rs.getString("tipo")));
-                    pedido.setEstadoPedido(rs.getString("estado"));
+                    pedido.setEstadoPedido(EstadoPedido.valueOf(rs.getString("estado")));
 
                     listaPedidos.add(pedido);
                 }
