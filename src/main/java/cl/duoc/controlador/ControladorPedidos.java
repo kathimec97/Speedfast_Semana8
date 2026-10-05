@@ -22,7 +22,7 @@ public class ControladorPedidos {
 
     private final PedidoDAO pedidoDAO;
 
-    public ControladorPedidos() throws SQLException, ClassNotFoundException {
+    public ControladorPedidos() throws SQLException {
         this.pedidoDAO = new PedidoDAOImpl();
 
 
@@ -36,7 +36,7 @@ public class ControladorPedidos {
      * @param filtroTipo   Filtro seleccionado por tipo de pedido
      * @param filtroEstado Filtro seleccionado por estado de pedido
      */
-    public void cargarTabla(DefaultTableModel modelo, String filtroTipo, String filtroEstado) {
+    public void cargarTabla(DefaultTableModel modelo, String filtroTipo, String filtroEstado) throws SQLException {
         modelo.setRowCount(0);
         List<Pedido> lista;
 
@@ -78,7 +78,7 @@ public class ControladorPedidos {
             pedidoDAO.create(nuevo);
             cargarTabla(modelo, "TODOS", "TODOS");
             JOptionPane.showMessageDialog(null, "Pedido agregado correctamente");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al agregar el pedido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -108,7 +108,7 @@ public class ControladorPedidos {
             pedidoDAO.update(editado);
             cargarTabla(modelo, "TODOS", "TODOS");
             JOptionPane.showMessageDialog(null, "Pedido editado correctamente");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al editar el pedido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
@@ -132,7 +132,7 @@ public class ControladorPedidos {
                 pedidoDAO.delete(id);
                 cargarTabla(modelo, "TODOS", "TODOS");
                 JOptionPane.showMessageDialog(null, "Pedido eliminado correctamente");
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al eliminar el pedido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
